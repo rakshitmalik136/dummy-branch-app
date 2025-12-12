@@ -2,7 +2,7 @@
 
 A production-ready containerized microloans REST API built with Flask, PostgreSQL, Docker, and automated CI/CD.
 
-## 🚀 Quick Start
+## Quick Start
 ```bash
 # 1. Start development environment
 make dev
@@ -14,7 +14,7 @@ curl -k https://branchloans.com/api/loans
 
 Open browser: `https://branchloans.com/health` (Click "Advanced" → "Proceed")
 
-## 📋 Assignment Completion
+## Assignment Completion
 
 All four parts of the Branch DevOps assignment have been completed:
 
@@ -23,7 +23,7 @@ All four parts of the Branch DevOps assignment have been completed:
 ✅ **Part 3**: CI/CD pipeline with GitHub Actions  
 ✅ **Part 4**: Comprehensive documentation
 
-## 🏗️ Architecture
+##  Architecture
 ```
 ┌─────────────────────────────────────────────────────┐
 │         branchloans.com:443 (HTTPS)                 │
@@ -58,26 +58,26 @@ All four parts of the Branch DevOps assignment have been completed:
          All containers on bridge network
 ```
 
-## ✨ Features
+## Features
 
-- 🐳 **Fully Containerized**: Docker + Docker Compose
-- 🔒 **HTTPS**: Nginx with self-signed SSL certificates
-- 🌍 **Multi-Environment**: Dev, Staging, Production configs
-- 🔐 **Security**: Non-root containers, Trivy vulnerability scanning
-- 🤖 **CI/CD**: Automated GitHub Actions pipeline
-- 💓 **Health Checks**: Container-level health monitoring
-- 📊 **Resource Management**: CPU/memory limits per environment
-- 💾 **Data Persistence**: Database survives container restarts
-- 📝 **Comprehensive Docs**: Complete setup and troubleshooting guide
+- **Fully Containerized**: Docker + Docker Compose
+- **HTTPS**: Nginx with self-signed SSL certificates
+- **Multi-Environment**: Dev, Staging, Production configs
+- **Security**: Non-root containers, Trivy vulnerability scanning
+- **CI/CD**: Automated GitHub Actions pipeline
+- **Health Checks**: Container-level health monitoring
+- **Resource Management**: CPU/memory limits per environment
+- **Data Persistence**: Database survives container restarts
+- **Comprehensive Docs**: Complete setup and troubleshooting guide
 
-## 📦 Prerequisites
+## Prerequisites
 
 - Docker 20.10+
 - Docker Compose 2.0+
 - Make (optional but recommended)
 - Git
 
-## 🔧 Installation & Setup
+## Installation & Setup
 
 ### 1. Clone Repository
 ```bash
@@ -112,7 +112,7 @@ make dev
 # Then access: https://branchloans.com/health
 ```
 
-## 🚀 Running the Application
+## Running the Application
 
 ### Using Make Commands (Recommended)
 ```bash
@@ -168,13 +168,13 @@ docker stats --no-stream
 
 ## 🌐 API Endpoints
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/health` | GET | Health check status |
-| `/api/loans` | GET | List all loans |
-| `/api/loans/:id` | GET | Get specific loan |
-| `/api/loans` | POST | Create new loan |
-| `/api/stats` | GET | Loan statistics |
+|      Endpoint    | Method |    Description      |
+|------------------|--------|---------------------|
+| `/health`        |   GET  | Health check status |
+| `/api/loans`     |   GET  | List all loans      |
+| `/api/loans/:id` |   GET  | Get specific loan   |
+| `/api/loans`     |  POST  | Create new loan     |
+| `/api/stats`     |   GET  | Loan statistics     |
 
 ### Example: Create a Loan
 ```bash
@@ -228,7 +228,7 @@ LOG_LEVEL=WARNING
 GUNICORN_WORKERS=4
 ```
 
-## 🔄 CI/CD Pipeline
+## CI/CD Pipeline
 
 The GitHub Actions pipeline automatically runs on every push and PR.
 
@@ -258,8 +258,8 @@ The GitHub Actions pipeline automatically runs on every push and PR.
 
 ### Triggers
 
-- ✅ Push to `main` → Full pipeline + image push
-- ✅ Pull Request → Test, Build, Scan only (no push)
+- Push to `main` → Full pipeline + image push
+- Pull Request → Test, Build, Scan only (no push)
 
 ### Container Registry
 
@@ -270,7 +270,7 @@ Tags:
 - `main` - Main branch
 - `<commit-sha>` - Specific commit
 
-## 🔍 Troubleshooting
+## Troubleshooting
 
 ### Issue: Website shows 404 or Not Found
 
@@ -361,7 +361,7 @@ docker-compose logs -f nginx
 docker-compose logs --tail=50 api
 ```
 
-## 📊 Project Structure
+## Project Structure
 ```
 dummy-branch-app/
 ├── .github/
@@ -398,7 +398,7 @@ dummy-branch-app/
 └── DESIGN_DECISIONS.md         # Technical decisions
 ```
 
-## 💡 Design Decisions
+## Design Decisions
 
 See `DESIGN_DECISIONS.md` for detailed explanations of:
 - Why we chose each technology
@@ -415,7 +415,7 @@ See `DESIGN_DECISIONS.md` for detailed explanations of:
 5. **Security Scanner**: Trivy (fast, comprehensive, free)
 6. **Container Registry**: ghcr.io (free, built-in auth)
 
-## 🔮 Future Improvements
+## Future Improvements
 
 Given more time, these enhancements would be valuable:
 
@@ -430,22 +430,22 @@ Given more time, these enhancements would be valuable:
 9. **Performance Testing**: Load testing with k6 or Locust
 10. **Blue-Green Deployment**: Zero-downtime deployment strategy
 
-## 📝 Assignment Deliverables Checklist
+## Assignment Deliverables Checklist
 
-- ✅ Part 1: Containerization with HTTPS
-- ✅ Part 2: Multi-environment setup (dev/staging/prod)
-- ✅ Part 3: CI/CD pipeline with security scanning
-- ✅ Part 4: Comprehensive documentation
-- ✅ GitHub repository with all code
-- ⏳ 10-minute video walkthrough (to be recorded)
+- Part 1: Containerization with HTTPS
+- Part 2: Multi-environment setup (dev/staging/prod)
+- Part 3: CI/CD pipeline with security scanning
+- Part 4: Comprehensive documentation
+- GitHub repository with all code
+- 10-minute video walkthrough (to be recorded)
 
-## 👤 Author
+## Author
 
 **Rakshit Malik**
 - GitHub: [@rakshitmalik1](https://github.com/rakshitmalik1)
 - Assignment: Branch DevOps Intern 2025
 
-## 📄 License
+## License
 
 This project is part of the Branch DevOps Intern take-home assignment.
 
