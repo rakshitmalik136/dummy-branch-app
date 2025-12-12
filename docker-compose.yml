@@ -1,33 +1,87 @@
+version: '3.8'
+
 services:
   db:
-    image: postgres:16
+    image: postgres:16-alpine
+    container_name: branch-db-${ENV}
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: microloans
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
-      - "5432:5432"
+      - "${DB_PORT}:5432"
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db_data_${ENV:-dev}:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d microloans"]
-      interval: 5s
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
       timeout: 5s
-      retries: 10
+      retries: 5
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: '${DB_CPU_LIMIT}'
+          memory: ${DB_MEMORY_LIMIT}
+        reservations:
+          cpus: '${DB_CPU_RESERVATION}'
+          memory: ${DB_MEMORY_RESERVATION}
+    networks:
+      - branch-network
+    restart: unless-stopped
 
   api:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: branch-api-${ENV}
     environment:
-      FLASK_ENV: development
-      DATABASE_URL: postgresql+psycopg2://postgres:postgres@db:5432/microloans
-      PORT: 8000
+      FLASK_ENV: ${FLASK_ENV}
+      DATABASE_URL: ${DATABASE_URL}
+      PORT: ${PORT}
+      LOG_LEVEL: ${LOG_LEVEL}
       PYTHONPATH: /app
     depends_on:
       db:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "python -c 'import requests; requests.get(\"http://localhost:8000/health\")'"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: '${API_CPU_LIMIT}'
+          memory: ${API_MEMORY_LIMIT}
+        reservations:
+          cpus: '${API_CPU_RESERVATION}'
+          memory: ${API_MEMORY_RESERVATION}
+    networks:
+      - branch-network
+    restart: unless-stopped
+    command: gunicorn -w ${GUNICORN_WORKERS} ${GUNICORN_RELOAD} -b 0.0.0.0:8000 --access-logfile - --error-logfile - --log-level ${LOG_LEVEL} wsgi:app
+
+  nginx:
+    image: nginx:alpine
+    container_name: branch-nginx-${ENV}
     ports:
-      - "8000:8000"
-    command: gunicorn -w 2 -b 0.0.0.0:8000 wsgi:app
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certs:/etc/nginx/certs:ro
+    depends_on:
+      - api
+    networks:
+      - branch-network
+    restart: unless-stopped
 
 volumes:
-  db_data:
+  db_data_dev:
+  db_data_staging:
+  db_data_prod:
+
+networks:
+  branch-network:
+    driver: bridge
