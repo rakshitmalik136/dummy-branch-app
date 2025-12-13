@@ -74,7 +74,7 @@ All four parts of the Branch DevOps assignment have been completed:
 
 - Docker 20.10+
 - Docker Compose 2.0+
-- Make (optional but recommended)
+- Make
 - Git
 
 ## Installation & Setup
@@ -114,7 +114,7 @@ make dev
 
 ## Running the Application
 
-### Using Make Commands (Recommended)
+### Using Make Commands
 ```bash
 # Development environment
 make dev
